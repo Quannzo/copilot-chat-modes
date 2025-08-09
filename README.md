@@ -1,15 +1,6 @@
-# Custom Copilot Chat Modes
+# Copilot Chat Modes
 
 Your personal GitHub Copilot chatmodes for planning, building, reviewing, and prompt crafting—quick to use, easy to love. Drop them in your user prompts folder and pick a mode while chatting.
-
-## Table of contents
-- What’s included
-- Prerequisites
-- Installation
-- Usage
-- Mode notes
-- Editing or extending
-- Troubleshooting
 
 ## What’s included ✨
 - `code.chatmode.md` — Implementation Agent. End-to-end coding assistant that turns a requirement into minimal, verified diffs with tests and quality gates.
@@ -117,4 +108,3 @@ Tip: Smaller tool lists can reduce noise and keep reasoning more deterministic. 
 - Ensure you’re using the matching user settings path for your channel.
 
 ---
-Personal utilities; adapt as needed.
