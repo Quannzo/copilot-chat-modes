@@ -8,6 +8,7 @@ Your personal GitHub Copilot chatmodes for planning, building, reviewing, and pr
 - `prd.chatmode.md` — PRD Author. Iterates to a final PRD and emits the document as JSON-only on finalization. Strong guardrails for assumptions and clarifications.
 - `prompter.chatmode.md` — Prompt Optimizer. Transforms any input into a high-quality, copy-ready prompt. Single-output text, no explanations.
 - `review.chatmode.md` — Code Review. Security-first diff review for a PR or branch compare with deterministic sections and prioritized findings.
+- `debug.chatmode.md` — Debug & Root Cause Analysis. Reproduce, isolate, and propose minimal, safe fixes with evidence-backed hypotheses and regression test guidance.
 
 ## Prerequisites 🧰
 - Visual Studio Code
@@ -64,6 +65,11 @@ Steps (any OS):
 ### Code Review (`review.chatmode.md`)
 - Input: PR URL or repo + base/head branches.
 - Produces a deterministic review: summary; prioritized findings with severity, evidence, impact, minimal fix, and suggested tests; API/back-compat; tests/docs; CI/deps; file-by-file notes; readiness checklist.
+
+### Debug & Root Cause Analysis (`debug.chatmode.md`)
+- Entry styles: task mode (run & surface issues) or issue mode (specific defect description).
+- Workflow: reproduce → form ≤3 evidence-linked hypotheses → investigate with minimal probes → confirm root cause → propose smallest behavior-preserving fix (+ alternative if riskier) → outline regression tests (failing path + negative/edge).
+- Guardrails: no feature creep, minimal diffs, explicit assumptions, ≤3 clarification questions per turn, deterministic output sections.
 
 ## Editing or extending 🔧
 - Duplicate any `*.chatmode.md` and tweak the description, rules, or control phrases.
